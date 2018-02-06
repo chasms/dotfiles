@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!.bash_profile
+!.shell_scripts
+!.shell_scripts/*
+
+# But still ignore anything that ends in '_private'
+.shell_scripts/*_private

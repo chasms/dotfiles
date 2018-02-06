@@ -1,0 +1,32 @@
+#!/bin/bash
+
+function repo {
+  printf "\n// initializing local repo...\n\n"
+  git init
+  printf "\n// adding and committing...\n\n"
+  git add .
+  git commit -am "Init"
+  printf "\n// creating remote repo...\n\n"
+  # if [ $# -eq 0 ] ; then
+  hub create $@
+  # else if 
+  # fi
+  printf "\n// pushing to remote...\n\n"
+  git push -u origin master
+}
+
+alias gcl="git clone"
+  alias gst="git status"
+  alias gl="git pull" 
+  alias gp="git push"
+  alias gd="git diff | subl"
+  alias gc="git commit -v"
+  alias gca="git commit -v -a"
+  alias gb="git branch"
+  alias gba="git branch -a"
+  alias gcam="git commit -am"
+  alias gbb="git branch -b"
+  alias gco="git checkout"
+  alias gcob="git checkout -b"
+  alias gcp="git cherry-pick"
+  alias gln="git log -n"

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+function rerake {
+  rake db:drop db:create db:migrate db:seed
+}

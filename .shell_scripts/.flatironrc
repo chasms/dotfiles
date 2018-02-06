@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function search {
+  languages | grep $1
+}
+function lang {
+  cat .learn | grep languages -A1 | tail -n1 | cut -d"-" -f2 | tr -d '[:space:]'
+}
+function languages {
+  cat .learn | grep languages -A2 | grep -e "-[a-z]*" | cut -d"-" -f2 | tr -d '[:space:]'
+}
+function tools {
+  if exists Gemfile; then
+    bundle;
+  fi
+  if exists package.json; then
+    yarn install;
+  fi
+}
+function tests {
+  if exists .learn; then
+    learn
+  elif exists .rspec; then
+    rspec;
+  elif exists package.json; then
+    npm test;
+  fi
+}
+function gitgot {
+  printf "\n//  cloning repo...\n\n"
+  reponame=${1##*/}
+  reponame=${reponame%.git}
+  git clone "$1" "$reponame"
+  cd "$reponame";
+  printf "\n//  building dependencies...\n\n"
+  tools;
+  printf "\n//  opening directory...\n"
+  code .;
+  printf "\n//  running tests: "
+  tests;
+  cd ..;
+}
+function gotgit {
+  learn submit;
+  cd ..
+}
