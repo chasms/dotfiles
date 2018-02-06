@@ -1,4 +1,4 @@
-# Dotfiles
+# dotfiles
 
 ## Setup
 **DO NOT CLONE THIS REPO NORMALLY**
@@ -56,4 +56,4 @@ Create functions, utilities, and files in the `.shell_scripts` directory to cust
 
 Any files in the `.shell_scripts` directory that you do not want included in version control should be suffixed with `_private`
 
-  * (e.g. `.shell_scripts/bashrc_private`, see `.gitignore` to see/modify configuration)
+  * (e.g. `.shell_scripts/.bashrc_private`, see `.gitignore` to see/modify configuration)
