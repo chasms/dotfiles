@@ -58,7 +58,7 @@ Any files in the `.shell_scripts` directory that you do not want included in ver
 
   * (e.g. `.shell_scripts/.bashrc_private`, see `.gitignore` to see/modify configuration)
 
-## Set this up for yourself
+## Set this Up for Yourself
 
 If you would prefer not to use my dotfile configuration but set up the version control with your own dotfiles:
 
