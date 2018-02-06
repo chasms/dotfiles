@@ -60,7 +60,7 @@ Any files in the `.shell_scripts` directory that you do not want included in ver
 
 ## Set this Up for Yourself
 
-If you would prefer not to use my dotfile configuration but set up the version control with your own dotfiles:
+*If you would prefer not to use my dotfile configuration but set up the version control with your own dotfiles*
 
   ```
   $ git init --bare $HOME/.dotfiles
@@ -70,7 +70,7 @@ If you would prefer not to use my dotfile configuration but set up the version c
   $ dotfiles config --local status.showUntrackedFiles no
   ```
   
-  * Add the following line to your shell profile (`.bash_profile` or `.bashrc` or whatever you use):
+  * Add the following line to your shell profile (`.bash_profile` or `.bashrc` or whatever you use) to make the `dotfiles` command available in new shells:
 
   ```
   alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
