@@ -50,6 +50,10 @@ function mov-to-gif() {
   ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
 }
 
+function flushdns() {
+  sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
+}
+
 # Hidden Files
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
