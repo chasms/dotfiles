@@ -1,0 +1,33 @@
+#!/bin/bash
+
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+function setup {
+  printf "\n${GREEN}Installing Homebrew${NC}\n"
+
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+  printf "\n${GREEN}Installing wget${NC}\n"
+
+  brew install wget
+
+  printf "\n${GREEN}Installing NVM${NC}\n"
+
+  wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+  printf "\n${GREEN}Installing Node versions via NVM${NC}\n"
+  
+  nvm install node
+  nvm install --lts
+  nvm alias default lts/*
+  nvm use default
+  nvm install-latest-npm
+
+  printf "\n${GREEN}Installing Yarn via Homebrew${NC}\n"
+
+  brew install yarn --without-node
+}
