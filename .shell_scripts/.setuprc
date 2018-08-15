@@ -6,7 +6,7 @@ NC='\033[0m'
 function setup {
   printf "\n${GREEN}Installing Homebrew${NC}\n"
 
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   printf "\n${GREEN}Installing wget${NC}\n"
 
