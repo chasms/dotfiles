@@ -25,7 +25,7 @@
     # ♥ ☆ ⊙ ∞ ☏ - Keeping some cool ASCII Characters for reference
 
     # the PS1 Variable stores the text for your prompt
-    export PS1="$ESCAPE_SEQUENCE$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET"
+    export PS1="$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET"
       PS2='> '
       PS4='+ '
   }
