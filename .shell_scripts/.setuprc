@@ -31,3 +31,51 @@ function setup {
 
   brew install yarn --without-node
 }
+
+function installnix {
+  printf "\n${GREEN}Downloading Nix installer...${NC}\n"
+  curl -o ~/install-nix-2.0.4 https://nixos.org/nix/install
+
+  printf "\n${GREEN}Downloading Nix installer signature...${NC}\n"
+  curl -o ~/install-nix-2.0.4.sig https://nixos.org/nix/install.sig
+  
+  printf "\n${GREEN}Getting Nix GPG keys...${NC}\n"
+  gpg2 --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
+
+  printf "\n${GREEN}Verifying Nix signature against GPG keys...${NC}\n"
+  gpg2 --verify ~/install-nix-2.0.4.sig
+
+  printf "\n${GREEN}Removing signature...${NC}\n"
+  rm ~/install-nix-2.0.4.sig
+
+  printf "\n${GREEN}Installing Nix...${NC}\n"
+  sh ~/install-nix-2.0.4
+
+  printf "\n${GREEN}Reloading the Nix daemon plist...${NC}\n"
+  sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+  sudo launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+
+  printf "\n${GREEN}Removing installer...${NC}\n"
+  rm ~/install-nix-2.0.4
+
+  printf "\n${GREEN}Reloading the shell...${NC}\n"
+  source /etc/bashrc
+  source ~/.bash_profile
+
+  printf "\n${GREEN}Printing nix-info...${NC}\n"
+  nix-shell -p nix-info --run "nix-info -m"
+}
+
+function removenix {
+  printf "\n${GREEN}Removing nix installation...${NC}\n"
+  sudo rm -rf /etc/nix /nix /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+
+  printf "\n${GREEN}Restoring ${NC}/etc/bashrc${GREEN}...${NC}\n"
+  sudo mv /etc/bashrc.backup-before-nix /etc/bashrc
+
+  printf "\n${GREEN}Restoring ${NC}/etc/zshrc${GREEN}...${NC}\n"
+  sudo mv /etc/zshrc.backup-before-nix /etc/zshrc
+
+  printf "\n${GREEN}Unsetting Nix envs...${NC}\n"
+  unset $(env | grep NIX | cut -d "=" -f 1)
+}
