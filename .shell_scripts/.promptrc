@@ -7,6 +7,8 @@
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
   }
 
+  export -f parse_git_branch
+
   # Build the prompt
   function prompt {
     # Define the prompt character
