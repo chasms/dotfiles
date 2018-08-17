@@ -5,6 +5,7 @@
 !.gitignore
 !README.md
 !.bash_profile
+!.bashrc
 !.shell_scripts
 !.shell_scripts/*
 
