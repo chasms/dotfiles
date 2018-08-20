@@ -27,9 +27,9 @@ function setup {
   nvm use default
   nvm install-latest-npm
 
-  printf "\n${GREEN}Installing Yarn via Homebrew${NC}\n"
+  # printf "\n${GREEN}Installing Yarn via Homebrew${NC}\n"
 
-  brew install yarn --without-node
+  # brew install yarn --without-node
 }
 
 function installnix {
