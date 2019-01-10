@@ -17,7 +17,7 @@
     alias dotfiles='`which git` --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
   # Git Bash Completion
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
+    if [ -f '`which brew` --prefix'/etc/bash_completion ]; then
       . `brew --prefix`/etc/bash_completion
     fi
 
