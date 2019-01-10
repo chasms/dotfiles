@@ -21,13 +21,12 @@
     local   MAGENTA="\[\e[0;35m\]"
     local   CYAN="\[\e[0;36m\]"
     local   GRAY_TEXT_BLUE_BACKGROUND="\[\e[37;44;1m\]"
-    # Define a variable to reset the text color
-    local   RESET="\[\e[0m\]"
+    local   RESET_COLOR="\[\e[0m\]"
     local   ESCAPE_SEQUENCE="\[\e]2;\u@\h\a"
     # ♥ ☆ ⊙ ∞ ☏ - Keeping some cool ASCII Characters for reference
 
     # the PS1 Variable stores the text for your prompt
-    export PS1="$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET"
+    export PS1="$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET_COLOR"
       PS2='> '
       PS4='+ '
   }

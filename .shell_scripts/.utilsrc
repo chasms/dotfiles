@@ -46,12 +46,42 @@ function rebash {
 function path {
   echo $PATH;
 }
-function mov-to-gif() {
+function mov-to-gif {
   ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
 }
 
-function flushdns() {
+function flushdns {
   sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
+}
+
+# takes function as $1 and list of args as $2
+function select-arg {
+  local CYAN=$'\e[1;36m'
+  local RESET_COLOR=$'\e[m'
+
+  # Set args
+  args=( $2 exit )
+
+  # Set select prompt PS3
+  PS3="Select the arg to use with $CYAN$1$RESET_COLOR: "
+
+  select arg in "${args[@]}"; do
+    echo "You have chosen $arg"
+
+    [[ $arg == exit ]] && break
+
+    eval $1 "$arg"
+    
+    break
+  done
+}
+
+function find-branch {
+  select-arg "git checkout" "`find-branches $1`"
+}
+
+function find-branches {
+  git branch -a | grep -v remotes | grep $1
 }
 
 # Hidden Files
