@@ -76,7 +76,7 @@ function select-arg {
   done
 }
 
-function find-branch {
+function select-branches {
   select-arg "git checkout" "`find-branches $1`"
 }
 
