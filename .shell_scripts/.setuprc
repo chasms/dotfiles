@@ -5,20 +5,20 @@ NC='\033[0m'
 
 setup () {
   printf "\n${GREEN}Installing Homebrew${NC}\n"
-
+  
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
+  
   printf "\n${GREEN}Installing wget${NC}\n"
-
+  
   brew install wget
-
+  
   printf "\n${GREEN}Installing NVM${NC}\n"
-
+  
   wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-
+  
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
+  
   printf "\n${GREEN}Installing Node versions via NVM${NC}\n"
   
   nvm install node
@@ -26,42 +26,42 @@ setup () {
   nvm alias default lts/*
   nvm use default
   nvm install-latest-npm
-
+  
   # printf "\n${GREEN}Installing Yarn via Homebrew${NC}\n"
-
+  
   # brew install yarn --without-node
 }
 
 installnix () {
   printf "\n${GREEN}Downloading Nix installer...${NC}\n"
   curl -o ~/install-nix-2.0.4 https://nixos.org/nix/install
-
+  
   printf "\n${GREEN}Downloading Nix installer signature...${NC}\n"
   curl -o ~/install-nix-2.0.4.sig https://nixos.org/nix/install.sig
   
   printf "\n${GREEN}Getting Nix GPG keys...${NC}\n"
   gpg2 --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
-
+  
   printf "\n${GREEN}Verifying Nix signature against GPG keys...${NC}\n"
   gpg2 --verify ~/install-nix-2.0.4.sig
-
+  
   printf "\n${GREEN}Removing signature...${NC}\n"
   rm ~/install-nix-2.0.4.sig
-
+  
   printf "\n${GREEN}Installing Nix...${NC}\n"
   sh ~/install-nix-2.0.4
-
+  
   printf "\n${GREEN}Reloading the Nix daemon plist...${NC}\n"
   sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist
   sudo launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist
-
+  
   printf "\n${GREEN}Removing installer...${NC}\n"
   rm ~/install-nix-2.0.4
-
+  
   printf "\n${GREEN}Reloading the shell...${NC}\n"
   source /etc/bashrc
   source ~/.bash_profile
-
+  
   printf "\n${GREEN}Printing nix-info...${NC}\n"
   nix-shell -p nix-info --run "nix-info -m"
 }
@@ -69,13 +69,13 @@ installnix () {
 removenix () {
   printf "\n${GREEN}Removing nix installation...${NC}\n"
   sudo rm -rf /etc/nix /nix /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
-
+  
   printf "\n${GREEN}Restoring ${NC}/etc/bashrc${GREEN}...${NC}\n"
   sudo mv /etc/bashrc.backup-before-nix /etc/bashrc
-
+  
   printf "\n${GREEN}Restoring ${NC}/etc/zshrc${GREEN}...${NC}\n"
   sudo mv /etc/zshrc.backup-before-nix /etc/zshrc
-
+  
   printf "\n${GREEN}Unsetting Nix envs...${NC}\n"
   unset $(env | grep NIX | cut -d "=" -f 1)
 }

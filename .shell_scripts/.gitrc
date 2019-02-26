@@ -9,7 +9,7 @@ repo () {
   printf "\n// creating remote repo...\n\n"
   # if [ $# -eq 0 ] ; then
   hub create $@
-  # else if 
+  # else if
   # fi
   printf "\n// pushing to remote...\n\n"
   git push -u origin master
@@ -25,7 +25,7 @@ find-branches () {
 
 commit-log () {
   local NEXT="$(date -v+1d +%F) 00:00"
-
+  
   local BLACK="\x1B[30m"
   local BLACK="\x1B[32m"
   local RED="\x1B[31m"
@@ -35,84 +35,84 @@ commit-log () {
   local BLUE="\x1B[34m"
   local CYAN="\x1B[36m"
   local RESET_COLOR="\x1B[0m"
-
+  
   local SINCE="1970-01-01 00:00"
   local UNTIL=$NEXT
   local LOGS=false
-
+  
   for i in "$@"
   do
-  case $i in
-    -h|--help)
-      echo
-      echo "usage: commit-log [--author|-a=<filter>][--since|-s=<date>][--until|-u=<date>][--help | -h]"
-      echo
-      echo "Generates git changelog grouped by day"    
-      echo
-      echo "Example usage:"
-      echo
-      echo '  $ commit-log --author="Charles Samuels" --since=1970-01-01 --until=2019-01-01'
-      echo '  $ commit-log -a="Charles Samuels" -s=1970-01-01 -u=2019-01-01'
-      echo
-      return
+    case $i in
+      -h|--help)
+        echo
+        echo "usage: commit-log [--author|-a=<filter>][--since|-s=<date>][--until|-u=<date>][--help | -h]"
+        echo
+        echo "Generates git changelog grouped by day"
+        echo
+        echo "Example usage:"
+        echo
+        echo '  $ commit-log --author="Charles Samuels" --since=1970-01-01 --until=2019-01-01'
+        echo '  $ commit-log -a="Charles Samuels" -s=1970-01-01 -u=2019-01-01'
+        echo
+        return
       ;;
-    -l|--logs)
-      LOGS=true
-      shift
+      -l|--logs)
+        LOGS=true
+        shift
       ;;
-    -a=*|--author=*)
-      local AUTHOR="${i#*=}"
-      shift
-    ;;
-    -s=*|--since=*)
-      SINCE="${i#*=}"
-      shift
-    ;;
-    -u=*|--until=*)
-      UNTIL="${i#*=}"
-      shift
-    ;;
-    *)
-      # unknown option
-    ;;
-  esac
+      -a=*|--author=*)
+        local AUTHOR="${i#*=}"
+        shift
+      ;;
+      -s=*|--since=*)
+        SINCE="${i#*=}"
+        shift
+      ;;
+      -u=*|--until=*)
+        UNTIL="${i#*=}"
+        shift
+      ;;
+      *)
+        # unknown option
+      ;;
+    esac
   done
-
+  
   local LOG_FORMAT=" %Cgreen*%Creset %s"
   
   if [ -z "$AUTHOR" ]; then
     LOG_FORMAT="$LOG_FORMAT %Cblue(%an)%Creset"
-  elif $LOGS; then
-    echo 
+    elif $LOGS; then
+    echo
     echo -e "${BLUE}Logs filtered by author: ${CYAN}${AUTHOR}${RESET}"
     echo -e "${BLUE}Commits since ${CYAN}${SINCE}${BLUE} and until ${CYAN}${UNTIL}${RESET}"
   fi
-
+  
   echo
   
   git log --no-merges --author="${AUTHOR}" --since="${SINCE}" --until="${UNTIL}" --format="%cd" --date=short | sort -u | while read DATE ; do
-
+    
     local COMMITS=$(git -c color.ui=always log --no-merges --reverse --format="${LOG_FORMAT}" --since="${DATE} 00:00:00" --until="${DATE} 23:59:59" --author="${AUTHOR}")
-
+    
     if [ ! -z "$COMMITS" ]
     then
       echo -e "${DATE_HEADING_COLOR}[$DATE]${RESET_COLOR}"
       echo -e "${COMMITS}"
       echo
     fi
-
+    
   done
 }
 
 git-by-date () {
-  commit-log -a="`git config --global user.name`" -s="$1 00:00" -u="$1 23:59" $@ 
+  commit-log -a="`git config --global user.name`" -s="$1 00:00" -u="$1 23:59" $@
 }
 
 alias git-today='git-by-date `date +%F`'
 
 alias gcl="git clone"
 alias gst="git status"
-alias gl="git pull" 
+alias gl="git pull"
 alias gp="git push"
 alias gd="git diff | subl"
 alias gc="git commit -v"

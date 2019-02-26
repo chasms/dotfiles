@@ -58,18 +58,18 @@ flushdns () {
 select-arg () {
   local CYAN=$'\e[1;36m'
   local RESET_COLOR=$'\e[m'
-
+  
   # Set args
   args=( $2 exit )
-
+  
   # Set select prompt PS3
   PS3="Select the arg to use with $CYAN$1$RESET_COLOR: "
-
+  
   select arg in "${args[@]}"; do
     echo "You have chosen $arg"
-
+    
     [[ $arg == exit ]] && break
-
+    
     eval $1 "$arg"
     
     break
