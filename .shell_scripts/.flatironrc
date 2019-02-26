@@ -1,15 +1,18 @@
 #!/bin/bash
 
-function search {
+search () {
   languages | grep $1
 }
-function lang {
+
+lang () {
   cat .learn | grep languages -A1 | tail -n1 | cut -d"-" -f2 | tr -d '[:space:]'
 }
-function languages {
+
+languages () {
   cat .learn | grep languages -A2 | grep -e "-[a-z]*" | cut -d"-" -f2 | tr -d '[:space:]'
 }
-function tools {
+
+tools () {
   if exists Gemfile; then
     bundle;
   fi
@@ -17,7 +20,8 @@ function tools {
     yarn install;
   fi
 }
-function tests {
+
+tests () {
   if exists .learn; then
     learn
   elif exists .rspec; then
@@ -26,7 +30,8 @@ function tests {
     npm test;
   fi
 }
-function gitgot {
+
+gitgot () {
   printf "\n//  cloning repo...\n\n"
   reponame=${1##*/}
   reponame=${reponame%.git}
@@ -40,7 +45,8 @@ function gitgot {
   tests;
   cd ..;
 }
-function gotgit {
+
+gotgit () {
   learn submit;
   cd ..
 }

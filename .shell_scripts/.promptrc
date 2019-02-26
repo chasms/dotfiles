@@ -1,38 +1,40 @@
 #!/bin/bash
+
 # ======================
 #  Prompt Configuration
 # ======================
-  # Output the active git branch.
-  function parse_git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-  }
 
-  export -f parse_git_branch
+# Output the active git branch.
+parse_git_branch () {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
 
-  # Build the prompt
-  function prompt {
-    # Define the prompt character
-    local   CHAR="∞"
-    # Define some local colors
-    local   RED="\[\e[0;31m\]"
-    local   GREEN="\[\e[0;32m\]"
-    local   YELLOW="\[\e[0;33m\]"
-    local   BLUE="\[\e[0;34m\]"
-    local   MAGENTA="\[\e[0;35m\]"
-    local   CYAN="\[\e[0;36m\]"
-    local   GRAY_TEXT_BLUE_BACKGROUND="\[\e[37;44;1m\]"
-    local   RESET_COLOR="\[\e[0m\]"
-    local   ESCAPE_SEQUENCE="\[\e]2;\u@\h\a"
-    # ♥ ☆ ⊙ ∞ ☏ - Keeping some cool ASCII Characters for reference
+export -f parse_git_branch
 
-    # the PS1 Variable stores the text for your prompt
-    export PS1="$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET_COLOR"
-      PS2='> '
-      PS4='+ '
-  }
+# Build the prompt
+prompt () {
+  # Define the prompt character
+  local   CHAR="∞"
+  # Define some local colors
+  local   RED="\[\e[0;31m\]"
+  local   GREEN="\[\e[0;32m\]"
+  local   YELLOW="\[\e[0;33m\]"
+  local   BLUE="\[\e[0;34m\]"
+  local   MAGENTA="\[\e[0;35m\]"
+  local   CYAN="\[\e[0;36m\]"
+  local   GRAY_TEXT_BLUE_BACKGROUND="\[\e[37;44;1m\]"
+  local   RESET_COLOR="\[\e[0m\]"
+  local   ESCAPE_SEQUENCE="\[\e]2;\u@\h\a"
+  # ♥ ☆ ⊙ ∞ ☏ - Keeping some cool ASCII Characters for reference
 
-  # Call the prompt function
-    prompt
-  
-  # For some common prompt features, check out Halloween Bash:
-  # http://xta.github.io/HalloweenBash/
+  # the PS1 Variable stores the text for your prompt
+  export PS1="$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET_COLOR"
+    PS2='> '
+    PS4='+ '
+}
+
+# Call the prompt function
+prompt
+
+# For some common prompt features, check out Halloween Bash:
+# http://xta.github.io/HalloweenBash/

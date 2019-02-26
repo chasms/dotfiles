@@ -3,7 +3,7 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-function setup {
+setup () {
   printf "\n${GREEN}Installing Homebrew${NC}\n"
 
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -32,7 +32,7 @@ function setup {
   # brew install yarn --without-node
 }
 
-function installnix {
+installnix () {
   printf "\n${GREEN}Downloading Nix installer...${NC}\n"
   curl -o ~/install-nix-2.0.4 https://nixos.org/nix/install
 
@@ -66,7 +66,7 @@ function installnix {
   nix-shell -p nix-info --run "nix-info -m"
 }
 
-function removenix {
+removenix () {
   printf "\n${GREEN}Removing nix installation...${NC}\n"
   sudo rm -rf /etc/nix /nix /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
 

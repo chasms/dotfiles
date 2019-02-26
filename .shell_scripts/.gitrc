@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function repo {
+repo () {
   printf "\n// initializing local repo...\n\n"
   git init
   printf "\n// adding and committing...\n\n"
@@ -15,15 +15,15 @@ function repo {
   git push -u origin master
 }
 
-function select-branches {
+select-branches () {
   select-arg "git checkout" "`find-branches $1`"
 }
 
-function find-branches {
+find-branches () {
   git branch -a | grep -v remotes | grep $1
 }
 
-function commit-log {
+commit-log () {
   local NEXT="$(date -v+1d +%F) 00:00"
 
   local BLACK="\x1B[30m"
@@ -31,10 +31,10 @@ function commit-log {
   local RED="\x1B[31m"
   local GREEN="\x1B[32m"
   local YELLOW="\x1B[33m"
-  local HEADING="\x1B[33m"
+  local DATE_HEADING_COLOR="\x1B[33m"
   local BLUE="\x1B[34m"
   local CYAN="\x1B[36m"
-  local RESET="\x1B[0m"
+  local RESET_COLOR="\x1B[0m"
 
   local SINCE="1970-01-01 00:00"
   local UNTIL=$NEXT
@@ -96,7 +96,7 @@ function commit-log {
 
     if [ ! -z "$COMMITS" ]
     then
-      echo -e "${HEADING}[$DATE]${RESET}"
+      echo -e "${DATE_HEADING_COLOR}[$DATE]${RESET_COLOR}"
       echo -e "${COMMITS}"
       echo
     fi
@@ -104,7 +104,7 @@ function commit-log {
   done
 }
 
-function git-by-date {
+git-by-date () {
   commit-log -a="`git config --global user.name`" -s="$1 00:00" -u="$1 23:59" $@ 
 }
 
