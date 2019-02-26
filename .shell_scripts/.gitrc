@@ -15,18 +15,113 @@ function repo {
   git push -u origin master
 }
 
+function select-branches {
+  select-arg "git checkout" "`find-branches $1`"
+}
+
+function find-branches {
+  git branch -a | grep -v remotes | grep $1
+}
+
+function commit-log {
+  local NEXT="$(date -v+1d +%F) 00:00"
+
+  local BLACK="\x1B[30m"
+  local BLACK="\x1B[32m"
+  local RED="\x1B[31m"
+  local GREEN="\x1B[32m"
+  local YELLOW="\x1B[33m"
+  local HEADING="\x1B[33m"
+  local BLUE="\x1B[34m"
+  local CYAN="\x1B[36m"
+  local RESET="\x1B[0m"
+
+  local SINCE="1970-01-01 00:00"
+  local UNTIL=$NEXT
+  local LOGS=false
+
+  for i in "$@"
+  do
+  case $i in
+    -h|--help)
+      echo
+      echo "usage: commit-log [--author|-a=<filter>][--since|-s=<date>][--until|-u=<date>][--help | -h]"
+      echo
+      echo "Generates git changelog grouped by day"    
+      echo
+      echo "Example usage:"
+      echo
+      echo '  $ commit-log --author="Charles Samuels" --since=1970-01-01 --until=2019-01-01'
+      echo '  $ commit-log -a="Charles Samuels" -s=1970-01-01 -u=2019-01-01'
+      echo
+      return
+      ;;
+    -l|--logs)
+      LOGS=true
+      shift
+      ;;
+    -a=*|--author=*)
+      local AUTHOR="${i#*=}"
+      shift
+    ;;
+    -s=*|--since=*)
+      SINCE="${i#*=}"
+      shift
+    ;;
+    -u=*|--until=*)
+      UNTIL="${i#*=}"
+      shift
+    ;;
+    *)
+      # unknown option
+    ;;
+  esac
+  done
+
+  local LOG_FORMAT=" %Cgreen*%Creset %s"
+  
+  if [ -z "$AUTHOR" ]; then
+    LOG_FORMAT="$LOG_FORMAT %Cblue(%an)%Creset"
+  elif $LOGS; then
+    echo 
+    echo -e "${BLUE}Logs filtered by author: ${CYAN}${AUTHOR}${RESET}"
+    echo -e "${BLUE}Commits since ${CYAN}${SINCE}${BLUE} and until ${CYAN}${UNTIL}${RESET}"
+  fi
+
+  echo
+  
+  git log --no-merges --author="${AUTHOR}" --since="${SINCE}" --until="${UNTIL}" --format="%cd" --date=short | sort -u | while read DATE ; do
+
+    local COMMITS=$(git -c color.ui=always log --no-merges --reverse --format="${LOG_FORMAT}" --since="${DATE} 00:00:00" --until="${DATE} 23:59:59" --author="${AUTHOR}")
+
+    if [ ! -z "$COMMITS" ]
+    then
+      echo -e "${HEADING}[$DATE]${RESET}"
+      echo -e "${COMMITS}"
+      echo
+    fi
+
+  done
+}
+
+function git-by-date {
+  commit-log -a="`git config --global user.name`" -s="$1 00:00" -u="$1 23:59" $@ 
+}
+
+alias git-today='git-by-date `date +%F`'
+
 alias gcl="git clone"
-  alias gst="git status"
-  alias gl="git pull" 
-  alias gp="git push"
-  alias gd="git diff | subl"
-  alias gc="git commit -v"
-  alias gca="git commit -v -a"
-  alias gb="git branch"
-  alias gba="git branch -a"
-  alias gcam="git commit -am"
-  alias gbb="git branch -b"
-  alias gco="git checkout"
-  alias gcob="git checkout -b"
-  alias gcp="git cherry-pick"
-  alias gln="git log -n"
+alias gst="git status"
+alias gl="git pull" 
+alias gp="git push"
+alias gd="git diff | subl"
+alias gc="git commit -v"
+alias gca="git commit -v -a"
+alias gb="git branch"
+alias gba="git branch -a"
+alias gcam="git commit -am"
+alias gbb="git branch -b"
+alias gco="git checkout"
+alias gcob="git checkout -b"
+alias gcp="git cherry-pick"
+alias gln="git log -n"
