@@ -5,6 +5,7 @@
 desktop () {
   cd /Users/$USER/Desktop/$@
 }
+
 # A function to easily grep for a matching process
 # USE: psg postgres
 psg () {
@@ -12,6 +13,7 @@ psg () {
   REST=`echo $1 | sed -e 's/^.\(.*\)/\1/'`
   ps aux | grep "[$FIRST]$REST"
 }
+
 # A function to extract correctly any archive based on extension
 # USE: extract imazip.zip
 #      extract imatar.tar
@@ -34,18 +36,23 @@ extract () {
     echo "'$1' is not a valid file"
   fi
 }
+
 exists () {
   [[ -f $1 ]]
 }
+
 editbash () {
   code ~/.bash_profile;
 }
+
 rebash () {
   source ~/.bash_profile;
 }
+
 path () {
   echo $PATH;
 }
+
 mov-to-gif () {
   ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
 }
@@ -56,21 +63,25 @@ flushdns () {
 
 # takes function as $1 and list of args as $2
 select-arg () {
+  # PS3-specific color values
   local CYAN=$'\e[1;36m'
   local RESET_COLOR=$'\e[m'
   
+  fn=$1
+  shift
+  
   # Set args
-  args=( $2 exit )
+  options=( $@ 'exit' )
   
   # Set select prompt PS3
-  PS3="Select the arg to use with $CYAN$1$RESET_COLOR: "
+  PS3="Select the arg to use with ${CYAN}$fn${RESET_COLOR}: "
   
-  select arg in "${args[@]}"; do
-    echo "You have chosen $arg"
+  select option in "${options[@]}"; do
+    echo "You have chosen $option"
     
-    [[ $arg == exit ]] && break
+    [[ $option == exit ]] && break
     
-    eval $1 "$arg"
+    eval fn "$option"
     
     break
   done
