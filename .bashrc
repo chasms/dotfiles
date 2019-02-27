@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# =====================
-# Include Shell Scripts
-# =====================
+# ╭──────────────────────╮
+# │ Include Shell Scripts │
+# ╰──────────────────────╯
 
 include () {
   for FILE in $( find "$1" -type f -print | sort )
@@ -25,9 +25,9 @@ fi
 # Case-Insensitive Auto Completion
 bind "set completion-ignore-case on"
 
-# ================================
-# Final Configurations and Plugins
-# ================================
+# ╭─────────────────────────────────╮
+# │ Final Configurations and Plugins │
+# ╰─────────────────────────────────╯
 
 # NVM
 export NVM_DIR=~/.nvm
