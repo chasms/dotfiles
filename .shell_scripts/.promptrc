@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# ======================
-#  Prompt Configuration
-# ======================
+#       ╭────────────────────────╮
+# ╭─────   Prompt Configuration   ────────────────────────────────────────────╮
+#       ╰────────────────────────╯
 
-# Output the active git branch.
+#   Output the active git branch
 parse_git_branch () {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 export -f parse_git_branch
 
-# Build the prompt
+#   Build the prompt
 prompt () {
   # Define the prompt character
   # ♥ ☆ ⊙ ∞ ☏ - Keeping some cool ASCII Characters for reference
@@ -34,7 +34,7 @@ prompt () {
   PS4='+ '
 }
 
-# Call the prompt function
+#   Call the prompt function
 prompt
 
 # For some common prompt features, check out Halloween Bash:
