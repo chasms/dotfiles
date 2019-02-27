@@ -16,25 +16,13 @@ repo () {
 }
 
 select-branches () {
-  select-arg "git checkout" "`find-branches $1`"
+  select-arg 'git checkout' "$(find-branches $1)"
 }
 
-find-branches () {
-  git branch -a | grep -v remotes | grep $1
-}
+alias find-branches='git branch -a | grep -v remotes | grep'
 
 commit-log () {
   local NEXT="$(date -v+1d +%F) 00:00"
-  
-  local BLACK="\x1B[30m"
-  local BLACK="\x1B[32m"
-  local RED="\x1B[31m"
-  local GREEN="\x1B[32m"
-  local YELLOW="\x1B[33m"
-  local DATE_HEADING_COLOR="\x1B[33m"
-  local BLUE="\x1B[34m"
-  local CYAN="\x1B[36m"
-  local RESET_COLOR="\x1B[0m"
   
   local SINCE="1970-01-01 00:00"
   local UNTIL=$NEXT
@@ -96,7 +84,7 @@ commit-log () {
     
     if [ ! -z "$COMMITS" ]
     then
-      echo -e "${DATE_HEADING_COLOR}[$DATE]${RESET_COLOR}"
+      echo -e "${YELLOW}[$DATE]${RESET_COLOR}"
       echo -e "${COMMITS}"
       echo
     fi

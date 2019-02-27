@@ -1,0 +1,10 @@
+#!/bin/bash
+
+export BLACK="\x1B[30m"
+export BLACK="\x1B[32m"
+export RED="\x1B[31m"
+export GREEN="\x1B[32m"
+export YELLOW="\x1B[33m"
+export BLUE="\x1B[34m"
+export CYAN="\x1B[36m"
+export RESET_COLOR="\x1B[0m"
