@@ -33,14 +33,14 @@ commit-log () {
     case $i in
       -h|--help)
         echo
-        echo "usage: commit-log [--author|-a=<filter>][--since|-s=<date>][--until|-u=<date>][--help | -h]"
+        echo "usage: commit-log [--author|-a=<filter>][--since|-s=<date>][--until|-u=<date>][--logs | -l][--help | -h]"
         echo
         echo "Generates git changelog grouped by day"
         echo
         echo "Example usage:"
         echo
-        echo '  $ commit-log --author="Charles Samuels" --since=1970-01-01 --until=2019-01-01'
-        echo '  $ commit-log -a="Charles Samuels" -s=1970-01-01 -u=2019-01-01'
+        echo '  $ commit-log --author="chasms" --since=1970-01-01 --until=2019-01-01'
+        echo '  $ commit-log -a="chasms" -s=1970-01-01 -u=2019-01-01'
         echo
         return
       ;;
