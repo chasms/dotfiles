@@ -106,6 +106,10 @@ git-by-date () {
 
 alias git-today='git-by-date `date +%F`'
 
+commits () {
+  cat ~/commit_log.txt | grep "$*"
+}
+
 alias gcl="git clone"
 alias gst="git status"
 alias gl="git pull"
