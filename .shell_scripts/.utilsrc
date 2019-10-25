@@ -100,3 +100,5 @@ alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall 
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 alias l='ls -lah'
+
+alias weather="curl wttr.in/NewYork?u0"
