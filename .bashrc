@@ -5,10 +5,10 @@
 #       ╰─────────────────────────╯
 
 include () {
-  for FILE in $( find "$1" -type f -print | sort )
-  do
-    source $FILE
-  done
+    for FILE in $( find "$1" -type f -print | sort )
+    do
+        source $FILE
+    done
 }
 
 # Pull in all shell scripts from the .shell_scripts directory
@@ -19,7 +19,7 @@ alias dotfiles='`which git` --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Git Bash Completion
 if [ -f '`which brew` --prefix'/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
+    . `brew --prefix`/etc/bash_completion
 fi
 
 # Case-Insensitive Auto Completion
