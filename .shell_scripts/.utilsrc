@@ -54,7 +54,20 @@ path () {
 }
 
 mov-to-gif () {
-    ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
+    if [[ $1 == -h ]] ; then
+        echo "usage: move-to-gif [--help | -h] <file> <output filename>"
+        return
+    fi
+    
+    if [[ -z $2 ]] ; then
+        echo "'$2' is not a valid output filename"
+    fi
+    
+    if [[ -f $1 ]] ; then
+        ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
 
 flushdns () {
