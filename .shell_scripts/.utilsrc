@@ -118,6 +118,15 @@ npm-do () {
     PATH=$OLD_PATH;
 }
 
+new-ssh-key () {
+    if [[ -z $1 ]] ; then
+        echo "Please pass a valid email address"
+        return
+    fi
+    
+    ssh-keygen -t rsa -b 4096 -C $1
+}
+
 # Hidden Files
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
