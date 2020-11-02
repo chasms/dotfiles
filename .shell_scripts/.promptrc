@@ -29,7 +29,7 @@ prompt () {
   local ESCAPE_SEQUENCE="\[\e]2;\u@\h\a"
 
   # the PS1 Variable stores the text for your prompt
-  export PS1="${YELLOW}SSH $BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$YELLOW//$RED $CHAR $RESET_COLOR"
+  export PS1="${YELLOW}SSH-\s $GREEN\u$YELLOW@\H\n$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$YELLOW//$RED $CHAR $RESET_COLOR"
   PS2='> '
   PS4='+ '
 }
