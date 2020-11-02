@@ -12,10 +12,10 @@ include () {
 }
 
 # Pull in all shell scripts from the .shell_scripts directory
-include ~/.shell_scripts
+include ~/dotfiles/.shell_scripts
 
 # Setup Dotfiles Bare Repo Git Alias
-alias dotfiles='`which git` --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='`which git` --git-dir=$HOME/dotfiles/.dotfiles/ --work-tree=$HOME/dotfiles'
 
 # Git Bash Completion
 if [ -f '`which brew` --prefix'/etc/bash_completion ]; then
