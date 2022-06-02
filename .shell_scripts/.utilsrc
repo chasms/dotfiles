@@ -53,16 +53,16 @@ path () {
     echo $PATH;
 }
 
-mov-to-gif () {
+gifify () {
     if [[ $1 == -h ]] ; then
-        echo "usage: move-to-gif [--help | -h] <file> <output filename>"
+        echo "usage: gifify [--help | -h] <file> <output filename>"
         return
     fi
-    
+
     if [[ -z $2 ]] ; then
         echo "'$2' is not a valid output filename"
     fi
-    
+
     if [[ -f $1 ]] ; then
         ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
     else
@@ -79,23 +79,23 @@ select-arg () {
     # PS3-specific color values
     local CYAN=$'\e[1;36m'
     local RESET_COLOR=$'\e[m'
-    
+
     fn=$1
     shift
-    
+
     # Set args
     options=( $@ 'exit' )
-    
+
     # Set select prompt PS3
     PS3="Select the arg to use with ${CYAN}$fn${RESET_COLOR}: "
-    
+
     select option in "${options[@]}"; do
         echo "You have chosen $option"
-        
+
         [[ $option == exit ]] && break
-        
+
         eval fn "$option"
-        
+
         break
     done
 }
@@ -110,11 +110,11 @@ pretty-print () {
 
 npm-do () {
     OLD_PATH=$PATH;
-    
+
     PATH=$(npm bin):$PATH;
-    
+
     eval $@;
-    
+
     PATH=$OLD_PATH;
 }
 
@@ -123,7 +123,7 @@ new-ssh-key () {
         echo "Please pass a valid email address"
         return
     fi
-    
+
     ssh-keygen -t rsa -b 4096 -C $1
 }
 
