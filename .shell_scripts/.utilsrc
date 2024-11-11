@@ -2,80 +2,81 @@
 
 # USE: desktop
 #      desktop subfolder
-desktop () {
+desktop() {
     cd /Users/$USER/Desktop/$@
 }
 
 # A function to easily grep for a matching process
 # USE: psg postgres
-psg () {
-    FIRST=`echo $1 | sed -e 's/^\(.\).*/\1/'`
-    REST=`echo $1 | sed -e 's/^.\(.*\)/\1/'`
+psg() {
+    FIRST=$(echo $1 | sed -e 's/^\(.\).*/\1/')
+    REST=$(echo $1 | sed -e 's/^.\(.*\)/\1/')
     ps aux | grep "[$FIRST]$REST"
 }
 
 # A function to extract correctly any archive based on extension
 # USE: extract imazip.zip
 #      extract imatar.tar
-extract () {
-    if [ -f $1 ] ; then
+extract() {
+    if [ -f $1 ]; then
         case $1 in
-            *.tar.bz2)  tar xjf $1      ;;
-            *.tar.gz)   tar xzf $1      ;;
-            *.bz2)      bunzip2 $1      ;;
-            *.rar)      rar x $1        ;;
-            *.gz)       gunzip $1       ;;
-            *.tar)      tar xf $1       ;;
-            *.tbz2)     tar xjf $1      ;;
-            *.tgz)      tar xzf $1      ;;
-            *.zip)      unzip $1        ;;
-            *.Z)        uncompress $1   ;;
-            *)          echo "'$1' cannot be extracted via extract()" ;;
+        *.tar.bz2) tar xjf $1 ;;
+        *.tar.gz) tar xzf $1 ;;
+        *.bz2) bunzip2 $1 ;;
+        *.rar) rar x $1 ;;
+        *.gz) gunzip $1 ;;
+        *.tar) tar xf $1 ;;
+        *.tbz2) tar xjf $1 ;;
+        *.tgz) tar xzf $1 ;;
+        *.zip) unzip $1 ;;
+        *.Z) uncompress $1 ;;
+        *) echo "'$1' cannot be extracted via extract()" ;;
         esac
     else
         echo "'$1' is not a valid file"
     fi
 }
 
-exists () {
+exists() {
     [[ -f $1 ]]
 }
 
-editbash () {
-    code ~/.bash_profile;
+editbash() {
+    code ~/.bash_profile
 }
 
-rebash () {
-    source ~/.bash_profile;
+rebash() {
+    source ~/.bash_profile
 }
 
-path () {
-    echo $PATH;
+path() {
+    echo $PATH
 }
 
-gifify () {
-    if [[ $1 == -h ]] ; then
+gifify() {
+    if [[ $1 == -h ]]; then
         echo "usage: gifify [--help | -h] <file> <output filename>"
         return
     fi
 
-    if [[ -z $2 ]] ; then
+    if [[ -z $2 ]]; then
         echo "'$2' is not a valid output filename"
     fi
 
-    if [[ -f $1 ]] ; then
-        ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
+    if [[ -f $1 ]]; then
+        ffmpeg -i $1 -vf "scale=1024:-1:flags=lanczos" -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 >$2
     else
         echo "'$1' is not a valid file"
     fi
 }
 
-flushdns () {
-    sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
+flushdns() {
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder
 }
 
 # takes function as $1 and list of args as $2
-select-arg () {
+select-arg() {
     # PS3-specific color values
     local CYAN=$'\e[1;36m'
     local RESET_COLOR=$'\e[m'
@@ -84,7 +85,7 @@ select-arg () {
     shift
 
     # Set args
-    options=( $@ 'exit' )
+    options=($@ 'exit')
 
     # Set select prompt PS3
     PS3="Select the arg to use with ${CYAN}$fn${RESET_COLOR}: "
@@ -100,7 +101,7 @@ select-arg () {
     done
 }
 
-pretty-print () {
+pretty-print() {
     echo -e $"$2
     ╭──────────────────────────────────────────────────────────╮
     $1
@@ -108,18 +109,18 @@ pretty-print () {
     $3"
 }
 
-npm-do () {
-    OLD_PATH=$PATH;
+npm-do() {
+    OLD_PATH=$PATH
 
-    PATH=$(npm bin):$PATH;
+    PATH=$(npm bin):$PATH
 
-    eval $@;
+    eval $@
 
-    PATH=$OLD_PATH;
+    PATH=$OLD_PATH
 }
 
-new-ssh-key () {
-    if [[ -z $1 ]] ; then
+new-ssh-key() {
+    if [[ -z $1 ]]; then
         echo "Please pass a valid email address"
         return
     fi
