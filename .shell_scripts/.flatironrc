@@ -1,52 +1,52 @@
 #!/bin/bash
 
-search () {
+search() {
   languages | grep $1
 }
 
-lang () {
+lang() {
   cat .learn | grep languages -A1 | tail -n1 | cut -d"-" -f2 | tr -d '[:space:]'
 }
 
-languages () {
+languages() {
   cat .learn | grep languages -A2 | grep -e "-[a-z]*" | cut -d"-" -f2 | tr -d '[:space:]'
 }
 
-tools () {
+tools() {
   if exists Gemfile; then
-    bundle;
+    bundle
   fi
   if exists package.json; then
-    yarn install;
+    yarn install
   fi
 }
 
-tests () {
+tests() {
   if exists .learn; then
     learn
   elif exists .rspec; then
-    rspec;
+    rspec
   elif exists package.json; then
-    npm test;
+    npm test
   fi
 }
 
-gitgot () {
+gitgot() {
   printf "\n//  cloning repo...\n\n"
   reponame=${1##*/}
   reponame=${reponame%.git}
   git clone "$1" "$reponame"
-  cd "$reponame";
+  cd "$reponame"
   printf "\n//  building dependencies...\n\n"
-  tools;
+  tools
   printf "\n//  opening directory...\n"
-  code .;
+  code .
   printf "\n//  running tests: "
-  tests;
-  cd ..;
+  tests
+  cd ..
 }
 
-gotgit () {
-  learn submit;
+gotgit() {
+  learn submit
   cd ..
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker_rimraf () {
+docker_rimraf() {
   # Delete all containers
   docker rm $(docker ps -aq)
   # Delete all images

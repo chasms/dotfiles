@@ -5,18 +5,18 @@
 #       ╰────────────────────────╯
 
 #   Output the active git branch
-parse_git_branch () {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+parse_git_branch() {
+  git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 export -f parse_git_branch
 
 #   Build the prompt
-prompt () {
+prompt() {
   # Define the prompt character
   # ♥ ☆ ⊙ ∞ ☏ - Keeping some cool ASCII Characters for reference
   local CHAR="∞"
-  
+
   # Define some local colors
   local RED="\[\e[0;31m\]"
   local GREEN="\[\e[0;32m\]"
@@ -27,7 +27,7 @@ prompt () {
   local GRAY_TEXT_BLUE_BACKGROUND="\[\e[37;44;1m\]"
   local RESET_COLOR="\[\e[0m\]"
   local ESCAPE_SEQUENCE="\[\e]2;\u@\h\a"
-  
+
   # the PS1 Variable stores the text for your prompt
   export PS1="$BLUE\@$GREEN\$(parse_git_branch) $CYAN\W\n$BLUE//$RED $CHAR $RESET_COLOR"
   PS2='> '
