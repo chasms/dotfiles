@@ -38,3 +38,4 @@ export NODE_PATH=$NODE_PATH:$(npm root -g)
 
 # RVM
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+eval "$(rbenv init - --no-rehash bash)"
